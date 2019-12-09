@@ -3,6 +3,9 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+const bodyParser = require("body-parser");
+var mongoose = require('mongoose');
+
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -41,20 +44,71 @@ app.use(function(err, req, res, next) {
 module.exports = app;
 
 // Create a scheme for items in the museum: a title and a path to an image.
-const itemSchema = new mongoose.Schema({
-  title: String,
-  path: String,
+const commentSchema = new mongoose.Schema({
+  author: String,
+  text: String,
+  date: String,
+  //recipe: String,
 });
 
 // Create a model for items in the museum.
-const Item = mongoose.model('Item', itemSchema);
+const Item = mongoose.model('Item', commentSchema);
 
 // GET method route
-app.get('/', function (req, res) {
-  res.send('GET request to the homepage')
+app.get('/user/get', async (req, res) => {
+  try {
+    let items = await Item.find();
+    res.send(items);
+  } catch (error) {
+    console.log(error);
+    res.sendStatus(500);
+  }
 })
 
-// POST method route
-app.post('/', function (req, res) {
-  res.send('POST request to the homepage')
+app.get('/admin', function (req, res) {
+  
 })
+
+
+
+// POST new comment
+app.post('/user/add', async (req, res) => {
+  const item = new Item({
+    author: req.body.author,
+    text: req.body.text,
+    date: req.body.date,
+    //recipe: req.body.recipe,
+  });
+  try {
+    await item.save();
+    res.send(item);
+  } catch (error) {
+    console.log(error);
+    res.sendStatus(500);
+  }
+});
+
+app.post('/admin', function (req, res) {
+  
+})
+
+
+app.delete('/admin/:id', async (req, res) => {
+  var id = req.params.id;
+  try {
+    Item.deleteOne({ _id: id }, function (err, results) {
+  });
+  }catch (error) {
+    console.log(error);
+  }
+
+  res.json({ success: id })
+});
+
+// connect to the database
+mongoose.connect('mongodb://localhost:27017/store', {
+  useNewUrlParser: true
+});
+
+
+app.listen(3001, () => console.log('Server listening on port 3000!'));
