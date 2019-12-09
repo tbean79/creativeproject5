@@ -84,6 +84,7 @@ let app = new Vue
     },
     addComment()
     {
+      console.log("in addComment");
       if (!(this.number in this.comments))
         Vue.set(app.comments, this.number, new Array);
       this.comments[this.number].push
@@ -92,13 +93,13 @@ let app = new Vue
         text: this.addedComment,
         date: moment().format('MMMM Do YYYY, h:mm:ss a')
       });
-      this.addedName = '';
-      this.addedComment = '';
-      var url = "http://tylerthesmiler.com:3002/user/add";
+      //this.addedName = '';
+      //this.addedComment = '';
+      var url = "http://tylerthesmiler.com:3004/add";
       axios.post(url, {
         author: this.addedName,
         text: this.addedComment,
-        date: moment().format("MMMM DO YYYY"),
+        date: moment().format("MMMM Do YYYY"),
       })
       .then(response => {
           console.log("Post Response ");
@@ -126,7 +127,7 @@ let app = new Vue
     },
     async getall() {
       console.log("get all");
-      var url = "http://tylerthesmiler.com:3002/user/get"; // This is the route we set up in index.js
+      var url = "http://tylerthesmiler.com:3004/get"; // This is the route we set up in index.js
       try {
         let response = await axios.get(url);
         this.comments = response.data; // Assign array to returned response

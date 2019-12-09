@@ -5,10 +5,11 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const bodyParser = require("body-parser");
 var mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost/votingDB',{useMongoClient:true});
+require('./models/Comments');
 
-
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+var routes = require('./routes/index');
+var users = require('./routes/users');
 
 var app = express();
 
@@ -22,8 +23,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/', routes)
+app.use('/users', users);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -42,73 +43,3 @@ app.use(function(err, req, res, next) {
 });
 
 module.exports = app;
-
-// Create a scheme for items in the museum: a title and a path to an image.
-const commentSchema = new mongoose.Schema({
-  author: String,
-  text: String,
-  date: String,
-  //recipe: String,
-});
-
-// Create a model for items in the museum.
-const Item = mongoose.model('Item', commentSchema);
-
-// GET method route
-app.get('/user/get', async (req, res) => {
-  try {
-    let items = await Item.find();
-    res.send(items);
-  } catch (error) {
-    console.log(error);
-    res.sendStatus(500);
-  }
-})
-
-app.get('/admin', function (req, res) {
-  
-})
-
-
-
-// POST new comment
-app.post('/user/add', async (req, res) => {
-  const item = new Item({
-    author: req.body.author,
-    text: req.body.text,
-    date: req.body.date,
-    //recipe: req.body.recipe,
-  });
-  try {
-    await item.save();
-    res.send(item);
-  } catch (error) {
-    console.log(error);
-    res.sendStatus(500);
-  }
-});
-
-app.post('/admin', function (req, res) {
-  
-})
-
-
-app.delete('/admin/:id', async (req, res) => {
-  var id = req.params.id;
-  try {
-    Item.deleteOne({ _id: id }, function (err, results) {
-  });
-  }catch (error) {
-    console.log(error);
-  }
-
-  res.json({ success: id })
-});
-
-// connect to the database
-mongoose.connect('mongodb://localhost:27017/store', {
-  useNewUrlParser: true
-});
-
-
-app.listen(3001, () => console.log('Server listening on port 3000!'));
