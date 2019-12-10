@@ -58,7 +58,7 @@ var app = new Vue({
   },
   methods: {
     addItem() {
-        var url = "http://chandlernet.org:8080/recipe";
+        var url = "http://tylerthesmiler.com:3004/recipe";
         axios.post(url, {
             title: this.title,
             ingredients: this.ingredients,
@@ -75,7 +75,7 @@ var app = new Vue({
     },
     async getall() {
       console.log("get all");
-      var url = "http://chandlernet.org:8080/recipe"; // This is the route we set up in index.js
+      var url = "http://tylerthesmiler.com:3004/recipe"; // This is the route we set up in index.js
       try {
         let response = await axios.get(url);
         this.recipes = response.data; // Assign array to returned response
@@ -90,7 +90,7 @@ var app = new Vue({
     deleteItem(recipe) {
       var index = this.recipes.indexOf(recipe);
       if (index > -1) {
-        var url = "http://chandlernet.org:8080/recipe/" + recipe._id;
+        var url = "http://tylerthesmiler.com:3004/recipe/" + recipe._id;
         axios.delete(url)
           .then(response => {
             console.log(response.data.recipes);
@@ -102,24 +102,30 @@ var app = new Vue({
         console.log("URL " + url);
       }
     },
-    addComment()
+    async addComment(recipe)
     {
       console.log("in addComment");
+      var url = "http://tylerthesmiler.com:3004/recipe/" + recipe._id;
+      var recipeID;
+      try {
+        let response = await axios.get(url);
+        recipeID = response._id;
+        console.log(this.comments);
+        return true;
+      }
+      catch (error) {
+        console.log(error);
+      }
       if (!(this.number in this.comments))
         Vue.set(app.comments, this.number, new Array);
-      this.comments[this.number].push
-      ({
-        author: this.addedName,
-        text: this.addedComment,
-        date: moment().format('MMMM Do YYYY, h:mm:ss a')
-      });
-      //this.addedName = '';
-      //this.addedComment = '';
+
+
       var url = "http://tylerthesmiler.com:3004/add";
       axios.post(url, {
         author: this.addedName,
         text: this.addedComment,
         date: moment().format("MMMM Do YYYY"),
+        recipeID: recipeID,
       })
       .then(response => {
           console.log("Post Response ");
@@ -127,8 +133,17 @@ var app = new Vue({
           this.comment.author = response.data.author;
           this.comment.text = response.data.text;
           this.comment.date = response.data.date;
+          this.comment.recipeID = response.data.recipeID;
           this.comments.push(response.data);
+          console.log(this.comments);
       })
+/*      this.comments[this.number].push
+      ({
+        author: this.addedName,
+        text: this.addedComment,
+        date: moment().format('MMMM Do YYYY, h:mm:ss a')
+        recipeID: recipeID,
+      });*/
     },
     setRating(rating)
     {
@@ -147,7 +162,7 @@ var app = new Vue({
     },
     async getcomments() {
       console.log("get all");
-      var url = "http://chandlernet.org:8080/get"; // This is the route we set up in index.js
+      var url = "http://tylerthesmiler:3004/get"; // This is the route we set up in index.js
       try {
         let response = await axios.get(url);
         this.comments = response.data; // Assign array to returned response

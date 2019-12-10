@@ -69,7 +69,7 @@ router.post('/add', async (req, res) => {
     author: req.body.author,
     text: req.body.text,
     date: req.body.date,
-    //recipe: req.body.recipe,
+    recipeID: req.body.recipeID,
   });
   try {
     console.log(item);

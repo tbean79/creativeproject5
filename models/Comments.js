@@ -6,7 +6,7 @@ const commentSchema = new mongoose.Schema({
   author: String,
   text: String,
   date: String,
-  //recipe: String,
+  recipeID: String,
 });
 
 mongoose.model('Comments', commentSchema);
