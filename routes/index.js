@@ -33,7 +33,7 @@ router.get('/recipe/:recipe',function(req,res) {
 
 
 router.delete('/recipe/:recipe',function(req,res) {
-  req.candidate.remove();
+  req.recipe.remove();
   res.sendStatus(200);
 });
 

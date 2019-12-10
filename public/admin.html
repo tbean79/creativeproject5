@@ -21,8 +21,7 @@
           </div>
         <h1>Current Products</h1>
         <div v-for="item in recipes">
-            <span class="glyphicon glyphicon-remove" 
-            v-on:click="deleteItem(item)"></span> 
+            <button v-on:click="deleteItem(item)"> remove</button> 
             {{ item.title }}
         </div>
         </div>
