@@ -17,6 +17,7 @@ var app = new Vue({
   
   created: function() {
     this.getall();
+    this.getcomments();
   },
   
   computed: 
@@ -43,19 +44,6 @@ var app = new Vue({
     },
   },
   
-   watch: 
-  {
-    number(value, oldvalue) 
-    {
-      if (oldvalue === '') 
-      {
-        this.max = value;
-      } else
-      {
-        this.xkcd();
-      }
-    },
-  },
   methods: {
     addItem() {
         var url = "http://tylerthesmiler.com:3004/recipe";
@@ -119,8 +107,8 @@ var app = new Vue({
       if (!(this.number in this.comments))
         Vue.set(app.comments, this.number, new Array);
 
-
       var url = "http://tylerthesmiler.com:3004/add";
+
       axios.post(url, {
         author: this.addedName,
         text: this.addedComment,

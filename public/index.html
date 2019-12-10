@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <link rel="stylesheet" href="/stylesheets/styles.css" />
+  <link rel="stylesheet" href="/stylesheets/style.css" />
   <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet">
   <title>Recipe Browser</title>
 </head>
@@ -12,27 +12,29 @@
   <div id="admin" class="content">
             <div class="products">
                 <div v-for="item in recipes">
-                        {{ item.title }}
-                        <p></p>
-                        {{ item.ingredients }}
-                        <p></p>
-                        {{ item.directions }}
-                </div>   
+                    <h2>Recipe Name:</h2>
+                      {{ item.title }}
+                    <h2>Ingredients:</h2>
+                      {{ item.ingredients }}
+                    <h2>Directions</h2>
+                      {{ item.directions }}
+                         <p></p>      
+                    <h3>Add a Comment</h3>
+                      <form v-on:submit.prevent="addComment">
+                        <input v-model="addedName" placeholder="Name"></p>
+                        <textarea v-model="addedComment"></textarea>
+                        <br />
+                        <button type="submit">Comment</button>
+                        </form>
+                        <h3>Comments</h3>
+                        <div v-for="comment in comments">
+                        <hr>
+                          <p>{{comment.text}}</p>
+                          <p><i>-- {{comment.author}} on {{comment.date}}</i></p>
+                        </div>
+                </div>
             </div>
-      <p></p>      
-      <h3>Add a Comment</h3>
-      <form v-on:submit.prevent="addComment">
-        <input v-model="addedName" placeholder="Name"></p>
-        <textarea v-model="addedComment"></textarea>
-        <br />
-        <button type="submit">Comment</button>
-      </form>
-      <h3>Comments</h3>
-      <div v-for="comment in comments[number]">
-        <hr>
-        <p>{{comment.text}}</p>
-        <p><i>-- {{comment.author}} on {{comment.date}}</i></p>
-    </div>
+      
   </div>
   
   <div class="footer">
