@@ -26,10 +26,18 @@ textarea {
    color: blue;
    text-align: center;
 }
-.products {
+.recipes {
      width: 80%;
     margin: 6% auto;
     background-color: white;
     border-radius: 15px;
     box-shadow: -4px 4px 10px gray;
+}
+
+
+.underlay {
+    background-image: url(../images/lace_background.jpg);
+    width: 100%;
+    position: relative;
+    background-size: cover;
 }

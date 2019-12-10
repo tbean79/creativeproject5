@@ -1,21 +1,10 @@
 var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
-var Comments = mongoose.model('Comments');
 var Recipe = mongoose.model('Recipe');
 
 
 
-// GET method route
-router.get('/get', async (req, res) => {
-  try {
-    let items = await Comments.find();
-    res.send(items);
-  } catch (error) {
-    console.log(error);
-    res.sendStatus(500);
-  }
-})
 
 router.param('recipe', function(req, res, next, id) {
   var query = Recipe.findById(id);
@@ -61,28 +50,6 @@ router.post('/recipe', function(req, res, next) {
 });
 
 
-
-// POST new comment
-router.post('/add', async (req, res) => {
-  console.log(req);
-  const item = new Comments({
-    author: req.body.author,
-    text: req.body.text,
-    date: req.body.date,
-    recipeID: req.body.recipeID,
-  });
-  try {
-    console.log(item);
-    await item.save();
-    console.log(res);
-    res.send(item);
-  } catch (error) {
-    console.log(error);
-    res.sendStatus(500);
-  }
-});
-
-
 router.delete('/admin/:id', async (req, res) => {
   var id = req.params.id;
   try {
@@ -97,5 +64,4 @@ router.delete('/admin/:id', async (req, res) => {
 
 module.exports = router;
 
-//app.listen(3003, () => console.log('Server listening on port 3003!'));
 

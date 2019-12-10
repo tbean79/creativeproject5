@@ -9,15 +9,13 @@ var app = new Vue({
       max: '',
       addedName: '',
       addedComment: '',
+      recipeID: '',
       comments: {},
-      ratings: {},
-      avg: '',
       loading: true,
   },
   
   created: function() {
     this.getall();
-    this.getcomments();
   },
   
   computed: 
@@ -88,77 +86,6 @@ var app = new Vue({
             console.log(e);
           });
         console.log("URL " + url);
-      }
-    },
-    async addComment(recipe)
-    {
-      console.log("in addComment");
-      var url = "http://tylerthesmiler.com:3004/recipe/" + recipe._id;
-      var recipeID;
-      try {
-        let response = await axios.get(url);
-        recipeID = response._id;
-        console.log(this.comments);
-        return true;
-      }
-      catch (error) {
-        console.log(error);
-      }
-      if (!(this.number in this.comments))
-        Vue.set(app.comments, this.number, new Array);
-
-      var url = "http://tylerthesmiler.com:3004/add";
-
-      axios.post(url, {
-        author: this.addedName,
-        text: this.addedComment,
-        date: moment().format("MMMM Do YYYY"),
-        recipeID: recipeID,
-      })
-      .then(response => {
-          console.log("Post Response ");
-          console.log(response.data);
-          this.comment.author = response.data.author;
-          this.comment.text = response.data.text;
-          this.comment.date = response.data.date;
-          this.comment.recipeID = response.data.recipeID;
-          this.comments.push(response.data);
-          console.log(this.comments);
-      })
-/*      this.comments[this.number].push
-      ({
-        author: this.addedName,
-        text: this.addedComment,
-        date: moment().format('MMMM Do YYYY, h:mm:ss a')
-        recipeID: recipeID,
-      });*/
-    },
-    setRating(rating)
-    {
-      if (!(this.number in this.ratings))
-      Vue.set(this.ratings, this.number, 
-      {
-        sum: 0,
-        total: 0,
-        average: 0,
-      });
-      this.ratings[this.number].sum += rating;
-      this.ratings[this.number].total += 1;
-      
-        this.ratings[this.number].average = this.ratings[this.number].sum / this.ratings[this.number].total;
-      this.avg = this.ratings[this.number].average;
-    },
-    async getcomments() {
-      console.log("get all");
-      var url = "http://tylerthesmiler:3004/get"; // This is the route we set up in index.js
-      try {
-        let response = await axios.get(url);
-        this.comments = response.data; // Assign array to returned response
-        console.log(this.comments);
-        return true;
-      }
-      catch (error) {
-        console.log(error);
       }
     },
   }
