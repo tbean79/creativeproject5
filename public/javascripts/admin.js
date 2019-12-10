@@ -17,6 +17,7 @@ var app = new Vue({
   
   created: function() {
     this.getall();
+    this.getcomments();
   },
   
   computed: 
@@ -43,19 +44,6 @@ var app = new Vue({
     },
   },
   
-   watch: 
-  {
-    number(value, oldvalue) 
-    {
-      if (oldvalue === '') 
-      {
-        this.max = value;
-      } else
-      {
-        this.xkcd();
-      }
-    },
-  },
   methods: {
     addItem() {
         var url = "http://chandlernet.org:8080/recipe";
@@ -115,7 +103,7 @@ var app = new Vue({
       });
       //this.addedName = '';
       //this.addedComment = '';
-      var url = "http://tylerthesmiler.com:3004/add";
+      var url = "http://chandlernet.org:8080/add";
       axios.post(url, {
         author: this.addedName,
         text: this.addedComment,

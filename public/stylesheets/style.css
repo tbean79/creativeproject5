@@ -26,3 +26,10 @@ textarea {
    color: blue;
    text-align: center;
 }
+.products {
+     width: 80%;
+    margin: 6% auto;
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: -4px 4px 10px gray;
+}
