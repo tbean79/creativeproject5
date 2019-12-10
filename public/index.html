@@ -4,25 +4,15 @@
 <head>
   <link rel="stylesheet" href="/stylesheets/styles.css" />
   <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet">
-  <title>XKCD Browser</title>
+  <title>Recipe Browser</title>
 </head>
 
 <body>
-  <h1>XKCD Browser</h1>
+  <h1>Recipe Browser</h1>
   
   
   <div id="app">
-    <div v-if="loading">
-      <p>Loading...</p>
-    </div>
-    <div v-else>
-    <h2>{{current.safe_title}}</h2>
-    <img v-bind:src="current.img" v-bind:alt="current.alt">
-    <p>{{current.alt}}</p>
-      <p><i>#{{current.num}}, drawn on {{current.day}} {{month}} {{current.year}}</i></p>
       
-      <star-rating @rating-selected ="setRating" v-bind:increment="0.5" active-color="#ff0000" v-bind:show-rating="false"></star-rating>
-      <div>Average Rating: {{ avg }}</div>
       
       <h3>Add a Comment</h3>
       <form v-on:submit.prevent="addComment">
@@ -36,7 +26,6 @@
         <hr>
         <p>{{comment.text}}</p>
         <p><i>-- {{comment.author}} on {{comment.date}}</i></p>
-    </div>
   </div>
   
   <div class="footer">
