@@ -10,10 +10,15 @@
 <body>
   <h1>Recipe Browser</h1>
   
-  
+  <div id="admin" class="content">
+            <div class="products">
+                <div v-for="item in recipes">
+                        <input type="checkbox" v-model="item.selected">
+                        {{ item.title }}
+                </div>   
+            </div>
+  </div>
   <div id="app">
-      
-      
       <h3>Add a Comment</h3>
       <form v-on:submit.prevent="addComment">
         <input v-model="addedName" placeholder="Name"></p>
@@ -29,6 +34,7 @@
   </div>
   
   <div class="footer">
+    <p><a href="admin.html">Admin</a></p>
     <p><a href="https://github.com/tbean79/creativeproject5">My Github Repo</a></p>
   </div>
   
@@ -37,6 +43,7 @@
   <script src="https://unpkg.com/moment"></script>
   <script src="https://unpkg.com/vue-star-rating/dist/star-rating.min.js"></script>
   <script src="/javascripts/user.js"></script>
+  <script src="/javascripts/admin.js"></script>
 </body>
 
 </html>

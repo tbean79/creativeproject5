@@ -13,9 +13,9 @@
           <form v-on:submit.prevent="addItem">
             Recipe Name<input type="text" v-model="title">
             <p></p>
-            Ingredients<input type="text" v-model="ingredients">
+            Ingredients<input type="text" v-model="ingredients"/>
             <p></p>
-            Directions<input type="textarea" v-model="directions">
+            Directions<input type="text" v-model="directions">
             <button type="submit">Add Recipe</button>
             </form>
           </div>
