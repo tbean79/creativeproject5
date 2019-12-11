@@ -4,6 +4,7 @@ var app = new Vue({
       title: '',
       ingredients: '',
       directions: '',
+      picURL: '',
       recipes: [],
   },
   
@@ -14,11 +15,12 @@ var app = new Vue({
   
   methods: {
     addItem() {
-        var url = "http://tylerthesmiler.com:3004/recipe";
+        var url = "http://chandlernet.org:8080/recipe";
         axios.post(url, {
             title: this.title,
             ingredients: this.ingredients,
-            directions: this.directions
+            directions: this.directions,
+            picURL: this.picURL,
         })
         .then(response => {
             console.log("Post Response ");
@@ -31,7 +33,7 @@ var app = new Vue({
     },
     async getall() {
       console.log("get all");
-      var url = "http://tylerthesmiler.com:3004/recipe"; // This is the route we set up in index.js
+      var url = "http://chandlernet.org:8080/recipe"; // This is the route we set up in index.js
       try {
         let response = await axios.get(url);
         this.recipes = response.data; // Assign array to returned response
@@ -46,7 +48,7 @@ var app = new Vue({
     deleteItem(recipe) {
       var index = this.recipes.indexOf(recipe);
       if (index > -1) {
-        var url = "http://tylerthesmiler.com:3004/recipe/" + recipe._id;
+        var url = "http://chandlernet.org:8080/recipe/" + recipe._id;
         axios.delete(url)
           .then(response => {
             console.log(response.data.recipes);

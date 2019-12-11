@@ -13,13 +13,17 @@
           <form v-on:submit.prevent="addItem">
             Recipe Name<input type="text" v-model="title">
             <p></p>
-            Ingredients<input type="text" v-model="ingredients"/>
+            Ingredients <br> 
+            <textarea v-model="ingredients"></textarea>
             <p></p>
-            Directions<input type="text" v-model="directions">
+            Directions <br>
+            <textarea v-model="directions"></textarea>
+            <p></p>
+            Picture URL<input type="text" v-model="picURL">
             <button type="submit">Add Recipe</button>
             </form>
           </div>
-        <h1>Current Products</h1>
+        <h1>Current Recipes</h1>
         <div v-for="item in recipes">
             <button v-on:click="deleteItem(item)"> remove</button> 
             {{ item.title }}
