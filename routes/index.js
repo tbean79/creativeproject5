@@ -49,19 +49,6 @@ router.post('/recipe', function(req, res, next) {
 	});
 });
 
-
-router.delete('/admin/:id', async (req, res) => {
-  var id = req.params.id;
-  try {
-    Comments.deleteOne({ _id: id }, function (err, results) {
-  });
-  }catch (error) {
-    console.log(error);
-  }
-
-  res.json({ success: id })
-});
-
 module.exports = router;
 
 
